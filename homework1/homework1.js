@@ -5,6 +5,8 @@ function pow(argument1, argument2){
   return Math.pow(argument1, argument2);
 }
 
+//>Brian: Good work.
+
 //---------------------------------------------------
 
 // Fill in the function body below, which accepts an array as an argument.
@@ -24,6 +26,7 @@ function numberArrayValidator(arr) {
   }
 }
 
+//>Brian: Nice! Is there some way we can use the forEach or filter methods?
 //---------------------------------------------------
 
 // Create a function below with the name "objectHasNameProp" that accepts
@@ -40,6 +43,7 @@ function objectHasNameProp(argument1){
   }
 }
 
+//>Brian: Good work here.
 //---------------------------------------------------
 
 // Create a function below named "addNamePropToObject". This function should:
@@ -51,7 +55,7 @@ function objectHasNameProp(argument1){
 // * Return the object.
 
 function addNamePropToObject(argument1){
-  if(typeof(argument1)!="object"){
+  if (typeof (argument1) != "object") { //>Brian: Remember to use !== instead of !=
     return null;
   }
   else{
@@ -103,7 +107,7 @@ function deletePropFromObj(object, property){
 // https://developer.mozilla.org/en-US/docs/Learn/JavaScript/Objects/Object_prototypes
 //
 
-
+//>Brian: did you accidentally forget to do this one?
 
 //---------------------------------------------------
 
@@ -121,6 +125,8 @@ function specialLoop(arr){
   }
 }
 
+//>Brian: Look up forEach method.
+
 //---------------------------------------------------
 
 // Create a function named "weatherChecker". This function should:
@@ -137,7 +143,7 @@ function specialLoop(arr){
 
 let arg1 = "windy";
 function weatherChecker(arg1){
-  switch(arg1){}
+  switch (arg1) { } //>Brian: This is incorrect syntax. Look up how to use switch statements online!
     case "sunny":
       console.log("Wear sunscreen!");
       break;
@@ -214,3 +220,74 @@ function makeChristmasTree(height){
     counter++;
   }
 }
+
+/* {BRIAN}>
+Good attempt! Let's try to break this down...
+
+We know that the maximum # of stars in any given tree where the height >= 2 is
+represented by the following relation:
+
+MaximumNumberOfStars = 2(height - 1) - 1
+
+Example:
+height = 5, MaximumNumberOfStars = 2(5 - 1) - 1 = 8 - 1 = 7.
+    *
+   ***
+  *****
+ ******* <-- 7 stars.
+    *
+
+height = 6, MaximumNumberOfStars = 2(6 - 1) - 1 = 10 - 1 = 9.
+    *
+   ***
+  *****
+ *******
+********* <-- 9 stars.
+    *
+
+If the height is one or zero, however, then we can simply print out one or zero
+stars, respectively.
+
+We want to maximize space (amount of memory required to store your tree) and 
+time efficiency for this question. How do we do this?
+
+Since we can calculate the maximum # of stars in a given tree where height >= 2,
+we can create an array that represents the stars at any given level and continuously
+add the result to a string! Here's what that looks like:
+*/
+
+function optimizedMakeTree(height) {
+  let tree = "";
+  if (height >= 2) {
+
+    for (let i = 0; hmax = height - 1, i < hmax; i++) {
+      tree += " ".repeat(height - i - 2) + "*".repeat((i * 2) + 1) + "\n";
+    }
+
+    tree += " ".repeat(height - 2) + "*";
+    return tree;
+  }
+  else if (height < 0) {
+    return Error("You must supply a height >= 0!");
+  }
+  else {
+    return '*'.repeat(height);
+  }
+}
+
+// You can test the speed of your code against mine!
+
+// Here's the benchmarks:
+
+console.log(optimizedMakeTree(5));
+console.log(makeChristmasTree(5));
+console.log("\n\n");
+
+console.time("Optimized Code");
+optimizedMakeTree(10000);
+console.timeEnd("Optimized Code");
+
+console.time("Your Code");
+makeChristmasTree(10000);
+console.timeEnd("Your Code");
+
